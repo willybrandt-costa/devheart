@@ -5,71 +5,32 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f0f8ff;
-    font-family: Arial, sans-serif;
-    text-align: center;
 }
 
 #container {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
 }
 
 #heart {
     position: absolute;
     width: 100px;
-    height: 90px;
+    height: 100px;
     background-color: red;
     transform: rotate(-45deg);
-    animation: pulsate 1s ease-in-out 5, explode 0.5s ease-in-out forwards;
+    animation: pulsate 1s infinite;
     transform-origin: center;
-    border-radius: 50% 50% 0 0;
-    clip-path: polygon(
-        50% 0%, 
-        100% 38%, 
-        82% 100%, 
-        50% 75%, 
-        18% 100%, 
-        0 38%
-    );
-}
-
-#heart::before,
-#heart::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 100px;
-    height: 90px;
-    background-color: red;
-    border-radius: 50%;
-}
-
-#heart::before {
-    left: -50px;
-}
-
-#heart::after {
-    right: -50px;
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 50% 75%, 18% 100%, 0 38%);
 }
 
 #flowers {
     position: absolute;
     font-size: 50px;
+    animation: appear 1s ease-in-out;
     text-align: center;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    animation: appear 1s ease-in-out forwards;
-}
-
-#message {
-    position: absolute;
-    font-size: 20px;
-    color: #333;
-    animation: fadeIn 2s ease-in-out forwards;
-    width: 100%;
-    top: 60%;
+    width: 100px;
+    height: 100px;
 }
 
 .hidden {
@@ -81,28 +42,17 @@ body {
         transform: scale(1) rotate(-45deg);
         background-color: red;
     }
-    20% {
+    25% {
         transform: scale(1.1) rotate(-45deg);
         background-color: blue;
     }
-    40% {
+    50% {
         transform: scale(1.2) rotate(-45deg);
         background-color: green;
     }
-    60% {
+    75% {
         transform: scale(1.3) rotate(-45deg);
         background-color: yellow;
-    }
-    80% {
-        transform: scale(1.4) rotate(-45deg);
-        background-color: purple;
-    }
-}
-
-@keyframes explode {
-    to {
-        transform: scale(3) rotate(-45deg);
-        opacity: 0;
     }
 }
 
@@ -114,14 +64,5 @@ body {
     100% {
         opacity: 1;
         transform: scale(1);
-    }
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
     }
 }
