@@ -27,10 +27,22 @@ body {
 #flowers {
     position: absolute;
     font-size: 50px;
-    animation: appear 1s ease-in-out;
     text-align: center;
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    animation: grow 2s ease-in-out forwards;
+}
+
+@keyframes grow {
+    0% {
+        transform: translateY(-50%) scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(-50%) scale(1.5);
+        opacity: 1;
+    }
 }
 
 .hidden {
