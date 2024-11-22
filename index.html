@@ -3,14 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flowers</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Flores Especiais</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f7f7f7;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #container {
+            position: relative;
+            text-align: center;
+        }
+
+        .heart {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            transform: rotate(-45deg);
+            top: 50%;
+            left: 50%;
+            margin-top: -50px;
+            margin-left: -50px;
+            animation: pulse 1s infinite, colorChange 5s infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -50px;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: 50px;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: rotate(-45deg) scale(1);
+            }
+            50% {
+                transform: rotate(-45deg) scale(1.2);
+            }
+        }
+
+        @keyframes colorChange {
+            0% { background: red; }
+            20% { background: orange; }
+            40% { background: yellow; }
+            60% { background: green; }
+            80% { background: blue; }
+            100% { background: red; }
+        }
+
+        .flower {
+            display: none;
+            font-size: 50px;
+            animation: bounce 0.8s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        #bouquet {
+            display: none;
+            font-size: 100px;
+            margin: auto;
+            animation: grow 1.5s ease-out forwards;
+        }
+
+        @keyframes grow {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        #message {
+            display: none;
+            font-size: 24px;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <div id="container">
-        <div id="heart"></div>
-        <div id="flowers" class="hidden">💐</div>
+        <div class="heart"></div>
+        <div class="flower" id="flower1">🌸</div>
+        <div class="flower" id="flower2">🌻</div>
+        <div class="flower" id="flower3">🌼</div>
+        <div id="bouquet">💐</div>
+        <div id="message">Você é especial pra mim, meu melzinho! ❤️</div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        // Quantas vezes o coração pulsa antes de desaparecer
+        const pulseCount = 5;
+        const heartDuration = 1000; // Duração de cada pulsação em milissegundos
+        const heartDisappearTime = pulseCount * heartDuration;
+
+        // Remover o coração após o número de pulsações
+        setTimeout(() => {
+            document.querySelector('.heart').style.display = 'none';
+        }, heartDisappearTime);
+
+        // Mostrar as flores em sequência
+        setTimeout(() => document.getElementById('flower1').style.display = 'block', heartDisappearTime + 500);
+        setTimeout(() => document.getElementById('flower2').style.display = 'block', heartDisappearTime + 2000);
+        setTimeout(() => document.getElementById('flower3').style.display = 'block', heartDisappearTime + 3500);
+
+        // Mostrar o buquê com a animação de crescimento
+        setTimeout(() => {
+            document.querySelectorAll('.flower').forEach(flower => flower.style.display = 'none');
+            document.getElementById('bouquet').style.display = 'block';
+        }, heartDisappearTime + 6000);
+
+        // Exibir a mensagem
+        setTimeout(() => {
+            document.getElementById('bouquet').style.display = 'none';
+            document.getElementById('message').style.display = 'block';
+        }, heartDisappearTime + 7500);
+    </script>
 </body>
 </html>
