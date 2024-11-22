@@ -165,11 +165,23 @@
             font-size: 40px;
             margin-top: 20px;
             display: none; /* Fica oculto até que a segunda mensagem apareça */
-            animation: fadeIn 2s ease-in forwards;
+            animation: fadeIn 2s ease-in forwards, fly 3s ease-in-out infinite;
         }
 
         #airplaneIcon:hover {
             transform: scale(1.2);
+        }
+
+        @keyframes fly {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(20px); /* Move o avião para a direita */
+            }
+            100% {
+                transform: translateX(0); /* Retorna à posição inicial */
+            }
         }
     </style>
 </head>
@@ -181,7 +193,7 @@
         <div class="flower" id="flower3">🌼</div>
         <div id="bouquet">💐</div>
         <div id="message">Você é especial pra mim, meu melzinho, está conquistando um bom espaço em meu ❤️</div>
-        <div id="clickMessage">Vamos voar, clica no avião!</div>
+        <div id="clickMessage">Vamos voar comigo? Clica no avião! </div>
         <div id="airplaneIcon" onclick="window.location.href='https://open.spotify.com/intl-pt/track/6XymeWgTguSv5cz9LuDclr?si=56251aa20b0d489d'">✈️</div>
     </div>
 
@@ -226,7 +238,7 @@
             document.getElementById('message').style.display = 'none';
             document.getElementById('clickMessage').style.display = 'block';
             document.getElementById('airplaneIcon').style.display = 'inline-block'; // Aparecer após a segunda mensagem
-        }, heartDisappearTime + 23000); // Mensagem 2 e ícone do avião
+        }, heartDisappearTime + 22000); // Mensagem 2 e ícone do avião
     </script>
 </body>
 </html>
