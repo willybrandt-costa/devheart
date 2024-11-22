@@ -26,13 +26,12 @@
             position: absolute;
             width: 100px;
             height: 100px;
-            background-color: red;
+            background-color: black; /* Cor preta inicialmente */
             transform: rotate(-45deg);
-            top: 50%;
+            top: -150px; /* Inicialmente acima da tela */
             left: 50%;
-            margin-top: -50px;
             margin-left: -50px;
-            animation: pulse 1s infinite, colorChange 5s infinite;
+            animation: fall 5s ease-in forwards;
         }
 
         .heart::before,
@@ -55,6 +54,15 @@
             left: 50px;
         }
 
+        @keyframes fall {
+            0% {
+                top: -150px;
+            }
+            100% {
+                top: 50%;
+            }
+        }
+
         @keyframes pulse {
             0%, 100% {
                 transform: rotate(-45deg) scale(1);
@@ -66,17 +74,24 @@
 
         @keyframes colorChange {
             0% { background: red; }
-            20% { background: orange; }
-            40% { background: yellow; }
-            60% { background: green; }
-            80% { background: blue; }
+            20% { background: green; }
+            40% { background: blue; }
+            60% { background: yellow; }
+            80% { background: white; }
             100% { background: red; }
+        }
+
+        @keyframes disappear {
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
         }
 
         .flower {
             display: none;
             font-size: 50px;
-            animation: bounce 0.8s ease-in-out;
+            animation: bounce 1s ease-in-out, fadeIn 2s ease-in forwards;
         }
 
         @keyframes bounce {
@@ -88,11 +103,29 @@
             }
         }
 
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
         #bouquet {
             display: none;
             font-size: 100px;
             margin: auto;
-            animation: grow 1.5s ease-out forwards;
+            animation: grow 1.5s ease-out forwards, fadeIn 2s ease-in forwards;
         }
 
         @keyframes grow {
@@ -116,6 +149,27 @@
             max-width: 80%; /* Adiciona um limite de largura para o texto */
             margin-left: auto;
             margin-right: auto;
+            animation: fadeIn 2s ease-in forwards;
+        }
+
+        #clickMessage {
+            display: none;
+            font-size: 24px;
+            margin-top: 20px;
+            text-align: center;
+            animation: fadeIn 2s ease-in forwards;
+        }
+
+        #airplaneIcon {
+            cursor: pointer;
+            font-size: 40px;
+            margin-top: 20px;
+            display: none; /* Fica oculto até que a segunda mensagem apareça */
+            animation: fadeIn 2s ease-in forwards;
+        }
+
+        #airplaneIcon:hover {
+            transform: scale(1.2);
         }
     </style>
 </head>
@@ -126,7 +180,9 @@
         <div class="flower" id="flower2">🌻</div>
         <div class="flower" id="flower3">🌼</div>
         <div id="bouquet">💐</div>
-        <div id="message">Você é especial pra mim, meu melzinho. Estás conquistando um bom espaço em meu ❤️. <br>Que bom que você chegou !</br></div>
+        <div id="message">Você é especial pra mim, meu melzinho, está conquistando um bom espaço em meu ❤️</div>
+        <div id="clickMessage">Vamos voar, clica no avião!</div>
+        <div id="airplaneIcon" onclick="window.location.href='https://open.spotify.com/intl-pt/track/6XymeWgTguSv5cz9LuDclr?si=56251aa20b0d489d'">✈️</div>
     </div>
 
     <script>
@@ -135,27 +191,42 @@
         const heartDuration = 1000; // Duração de cada pulsação em milissegundos
         const heartDisappearTime = pulseCount * heartDuration;
 
-        // Remover o coração após o número de pulsações
+        // 1. Coração preto cai primeiro
+        // 2. Após o coração preto, ele começa a pulsar e mudar de cor após 1 segundo
         setTimeout(() => {
-            document.querySelector('.heart').style.display = 'none';
-        }, heartDisappearTime);
+            // Inicia a animação de pulsação e mudança de cor no mesmo local onde o coração parou
+            document.querySelector('.heart').style.animation = 'pulse 1s infinite, colorChange 5s infinite';
+        }, 6000); // O coração começa a pulsar 1 segundo após parar
 
-        // Mostrar as flores em sequência
-        setTimeout(() => document.getElementById('flower1').style.display = 'block', heartDisappearTime + 500);
-        setTimeout(() => document.getElementById('flower2').style.display = 'block', heartDisappearTime + 2000);
-        setTimeout(() => document.getElementById('flower3').style.display = 'block', heartDisappearTime + 3500);
+        // 3. Remover o coração após 5 pulsações e mudanças de cor
+        setTimeout(() => {
+            document.querySelector('.heart').style.animation = 'disappear 2s forwards'; // Desaparece suavemente após a animação
+        }, heartDisappearTime + 6000); // Desaparece após os 5 pulsos
 
-        // Mostrar o buquê com a animação de crescimento
+        // **Ajustando o tempo do buquê e as próximas animações**
+        // 4. Mostrar as flores após o coração terminar sua animação de pulsação e mudança de cor
+        setTimeout(() => document.getElementById('flower1').style.display = 'block', heartDisappearTime + 8000);
+        setTimeout(() => document.getElementById('flower2').style.display = 'block', heartDisappearTime + 10000);
+        setTimeout(() => document.getElementById('flower3').style.display = 'block', heartDisappearTime + 12000);
+
+        // 5. Mostrar o buquê com a animação de crescimento, agora 2 segundos depois
         setTimeout(() => {
             document.querySelectorAll('.flower').forEach(flower => flower.style.display = 'none');
             document.getElementById('bouquet').style.display = 'block';
-        }, heartDisappearTime + 6000);
+        }, heartDisappearTime + 14000); // Agora o buquê aparece 2 segundos depois
 
-        // Exibir a mensagem
+        // 6. Exibir a primeira mensagem
         setTimeout(() => {
             document.getElementById('bouquet').style.display = 'none';
             document.getElementById('message').style.display = 'block';
-        }, heartDisappearTime + 7500);
+        }, heartDisappearTime + 16000); // Mensagem 1
+
+        // 7. Exibir a segunda mensagem (Clique no avião)
+        setTimeout(() => {
+            document.getElementById('message').style.display = 'none';
+            document.getElementById('clickMessage').style.display = 'block';
+            document.getElementById('airplaneIcon').style.display = 'inline-block'; // Aparecer após a segunda mensagem
+        }, heartDisappearTime + 23000); // Mensagem 2 e ícone do avião
     </script>
 </body>
 </html>
