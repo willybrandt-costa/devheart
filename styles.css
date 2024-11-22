@@ -12,8 +12,71 @@ body {
     width: 100px;
     height: 100px;
 }
+.heart {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    transform: rotate(-45deg); /* Rotação ajustada para 90 graus à esquerda */
+    animation: pulse 1.5s infinite, colorChange 6s infinite;
+}
 
-#heart {
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    border-radius: 50%; /* Círculos arredondados */
+    animation: inherit; /* Herda as animações */
+}
+
+.heart::before {
+    top: -50px; /* Move o círculo para cima */
+    left: 0;
+}
+
+.heart::after {
+    top: 0;
+    left: 50px; /* Move o círculo para o lado direito */
+}
+
+/* Animação de pulsação */
+@keyframes pulse {
+    0%, 100% {
+        transform: rotate(-45deg) scale(1); /* Mantém a rotação do coração */
+    }
+    50% {
+        transform: rotate(-45deg) scale(1.2); /* Aumenta o tamanho */
+    }
+}
+
+/* Animação de mudança de cor */
+@keyframes colorChange {
+    0% {
+        background-color: red;
+    }
+    25% {
+        background-color: green;
+    }
+    50% {
+        background-color: blue;
+    }
+    75% {
+        background-color: black;
+    }
+    100% {
+        background-color: white;
+    }
+}
+
+.heart::before,
+.heart::after {
+    animation: pulse 1.5s infinite, colorChange 6s infinite;
+}
+
+/*  #heart {
     position: absolute;
     width: 100px;
     height: 100px;
@@ -21,7 +84,7 @@ body {
     transform: rotate(-45deg);
     animation: pulsate 1s infinite;
     transform-origin: center;
-    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 50% 75%, 18% 100%, 0 38%);
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 50% 75%, 18% 100%, 0 38%);*/
 }
 
 #flowers {
